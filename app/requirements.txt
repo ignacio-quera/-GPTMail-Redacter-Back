@@ -1,0 +1,2 @@
+openai
+uvicorn==0.28.0

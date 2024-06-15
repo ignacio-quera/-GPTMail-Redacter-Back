@@ -1,0 +1,7 @@
+# Create a container for the application
+myapp:
+  image: myapp:latest
+  ports:
+    - 8080:80
+  volumes:
+    - ./app:/app

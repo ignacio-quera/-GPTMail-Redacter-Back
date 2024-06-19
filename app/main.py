@@ -15,9 +15,11 @@ app.add_middleware(
 )
 
 
-print(os.getenv("OPENAI_API_KEY"))
-
+# Get key from environment variable
 API_KEY = os.getenv("OPENAI_API_KEY")
+
+# 
+# API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
     api_key = API_KEY
@@ -31,8 +33,10 @@ async def generate_text(event_data: dict = Body(...)):
         response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are a service which uses the Montoya method to create valuable email given a greeting, a sender name, a case and a request."},
-            {"role": "user", "content": f"Compose an email in {language} in which the sender name is {prompt['name']}, the greeting is {prompt['greeting']}, the case {prompt['case']} and the request {prompt['request']}."}
+            {"role": "system", "content": f'''You are a service which uses the Montoya method to create valuable email given a greeting, a sender name, a case and a request.
+              The Montoya method needs to have the following structure: Greeting, presentation of the sender, exposion of case and requeriment. 
+             The greeting will be recieved in spanish but it needs to be transalated to {language}.'''},
+            {"role": "user", "content": f"Compose a short email in {language} from {prompt['name']}, the greeting is {prompt['greeting']}, the case {prompt['case']} and the request {prompt['request']}. Make the email breif and concise using the Montoya method and write it all in {language}."}
         ]
         )
         generated_text = response.choices[0].message
@@ -46,4 +50,4 @@ async def root():
     return {"message": "Hello world"}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8080)

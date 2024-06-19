@@ -1,7 +1,11 @@
-# Create a container for the application
-myapp:
-  image: myapp:latest
-  ports:
-    - 8080:80
-  volumes:
-    - ./app:/app
+version: '3.8'
+
+services:
+  myapp:
+    build:
+        context: .
+        dockerfile: dockerfile
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/app

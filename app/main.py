@@ -16,7 +16,8 @@ app.add_middleware(
 
 
 print(os.getenv("OPENAI_API_KEY"))
-API_KEY = os.getenv("OPENAI_API")
+
+API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
     api_key = API_KEY
@@ -35,7 +36,6 @@ async def generate_text(event_data: dict = Body(...)):
         ]
         )
         generated_text = response.choices[0].message
-        print(generated_text)
         return generated_text
     except Exception as e:
         print(e)
@@ -47,4 +47,3 @@ async def root():
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
-

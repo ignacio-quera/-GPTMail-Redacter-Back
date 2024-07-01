@@ -14,9 +14,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+API_KEY = ""
 
 # Get key from environment variable
-API_KEY = os.getenv("OPENAI_API_KEY")
+# API_KEY = os.getenv("OPENAI_API_KEY")
 
 # 
 # API_KEY = os.getenv("OPENAI_API_KEY")
@@ -34,9 +35,9 @@ async def generate_text(event_data: dict = Body(...)):
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": f'''You are a service which uses the Montoya method to create valuable email given a greeting, a sender name, a case and a request.
-              The Montoya method needs to have the following structure: Greeting, presentation of the sender, exposion of case and requeriment. 
+              The Montoya method needs to have the following structure: Greeting, presentation of the sender, exposion of case and requeriment. Do NOT generate the 
              The greeting will be recieved in spanish but it needs to be transalated to {language}.'''},
-            {"role": "user", "content": f"Compose a short email in {language} from {prompt['name']}, the greeting is {prompt['greeting']}, the case {prompt['case']} and the request {prompt['request']}. Make the email breif and concise using the Montoya method and write it all in {language}."}
+            {"role": "user", "content": f"Compose a short email in {language} from {prompt['name']} to {prompt['to']}, the greeting is {prompt['greeting']}, the case {prompt['case']} and the request {prompt['request']}. Make the email breif and concise using the Montoya method and write it all in {language}."}
         ]
         )
         generated_text = response.choices[0].message

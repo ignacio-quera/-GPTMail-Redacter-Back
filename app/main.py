@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
 
 app = FastAPI()
 
@@ -14,13 +15,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-API_KEY = ""
-
 # Get key from environment variable
-# API_KEY = os.getenv("OPENAI_API_KEY")
-
-# 
-# API_KEY = os.getenv("OPENAI_API_KEY")
+load_dotenv()
+API_KEY = os.getenv("OPENAI_API_KEY")
 
 client = OpenAI(
     api_key = API_KEY
